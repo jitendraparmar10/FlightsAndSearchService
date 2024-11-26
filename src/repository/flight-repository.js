@@ -42,7 +42,7 @@ class FlightRepository {
         }
     }
 
-    async getflight(flightId){
+    async getFlight(flightId){
         try {
             const flight = await Flights.findByPk(flightId);
             return flight;
@@ -61,6 +61,26 @@ class FlightRepository {
             });
             return flight;
         } catch (error) {
+            console.log("Something went wrong in the repository layer");
+            throw{error};
+        }
+     }
+
+     async updateFlights(flightId,data){
+        try {
+            await Flights.update(data, {
+                where:{
+                    id:flightId,
+                }
+            });
+            return true;
+        } catch (error) {
+            // throw new AppError(
+            //     'RepositoryError',
+            //     'Cannot update Booking',
+            //     'There was some issue updating the  booking ,please try againg later',
+            //     StatusCodes.INTERNAL_SERVER_ERROR
+            // );
             console.log("Something went wrong in the repository layer");
             throw{error};
         }
